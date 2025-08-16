@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Voice for Peace | IES Public School</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #f5faff;
+      color: #333;
+      line-height: 1.6;
+    }
+    nav {
+      background: #003366;
+      padding: 10px 20px;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 10;
+      display: flex;
+      justify-content: center;
+      gap: 25px;
+    }
+    nav a {
+      color: white;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 1rem;
+      transition: color 0.3s ease;
+    }
+    nav a:hover,
+    nav a:focus {
+      color: #80b3ff;
+      outline: none;
+    }
+    header {
+      height: 70vh;
+      position: relative;
+      margin-top: 50px; /* to not hide behind fixed nav */
+      overflow: hidden;
+      background: #cce4ff;
+    }
+    header iframe {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      border: none;
+      opacity: 1; /* fully visible, no blur or light */
+      pointer-events: none;
+      user-select: none;
+      z-index: 0;
+    }
+    header .overlay {
+      position: relative;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      z-index: 1;
+      padding: 0 15px;
+      text-align: center;
+    }
+    header h1 {
+      font-size: 3rem;
+      color: #003366;
+      margin-bottom: 0.3rem;
+    }
+    header p {
+      font-size: 1.3rem;
+      color: #004080;
+      font-weight: 500;
+    }
+    section {
+      padding: 80px 10%;
+      max-width: 1200px;
+      margin: 0 auto;
+      text-align: center;
+    }
+    section h2 {
+      font-size: 2.5rem;
+      margin-bottom: 20px;
+      color: #003366;
+    }
+    section p {
+      max-width: 900px;
+      margin: 0 auto 40px;
+      font-size: 1.2rem;
+    }
+    .mission-cards {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px;
+    }
+    .mission-card {
+      background: #fff;
+      border-radius: 12px;
+      padding: 20px;
+      flex: 1 1 280px;
+      max-width: 300px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s ease;
+    }
+    .mission-card:hover,
+    .mission-card:focus-within {
+      transform: translateY(-8px);
+      outline: none;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+    }
+    .mission-card img {
+      width: 100%;
+      border-radius: 12px;
+      margin-bottom: 15px;
+      height: 180px;
+      object-fit: cover;
+    }
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 15px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .gallery img {
+      width: 100%;
+      border-radius: 12px;
+      height: 200px;
+      object-fit: cover;
+      transition: transform 0.3s ease;
+    }
+    .gallery img:hover,
+    .gallery img:focus {
+      transform: scale(1.05);
+      outline: none;
+    }
+    .edu-items {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .edu-item {
+      background: #fff;
+      border-radius: 12px;
+      padding: 10px;
+      flex: 1 1 280px;
+      max-width: 300px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      text-align: center;
+      transition: transform 0.3s ease;
+    }
+    .edu-item:hover,
+    .edu-item:focus-within {
+      transform: translateY(-8px);
+      outline: none;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+    }
+    .edu-item img {
+      width: 100%;
+      border-radius: 12px;
+      margin-bottom: 10px;
+      height: 180px;
+      object-fit: cover;
+    }
+    .member {
+      background: #fff;
+      border-radius: 12px;
+      padding: 15px;
+      flex: 1 1 250px;
+      max-width: 280px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      margin: 0 10px 20px;
+      text-align: center;
+      transition: transform 0.3s ease;
+    }
+    .member:hover,
+    .member:focus-within {
+      transform: translateY(-8px);
+      outline: none;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+    }
+    .member img {
+      border-radius: 50%;
+      width: 120px;
+      height: 120px;
+      object-fit: cover;
+      margin-bottom: 10px;
+    }
+    form {
+      max-width: 600px;
+      margin: 0 auto;
+      background: #fff;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      text-align: left;
+    }
+    form label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: 600;
+      color: #003366;
+    }
+    form input,
+    form textarea {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 20px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-size: 1rem;
+    }
+    form button {
+      background: #003366;
+      color: white;
+      border: none;
+      padding: 12px 20px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 1rem;
+      font-weight: 600;
+      transition: background-color 0.3s ease;
+    }
+    form button:hover,
+    form button:focus {
+      background: #004080;
+      outline: none;
+    }
+    @media (max-width: 768px) {
+      .mission-cards,
+      .edu-items,
+      .gallery {
+        flex-direction: column;
+        grid-template-columns: 1fr !important;
+      }
+    }
+  </style>
+  <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+  <script>
+    (function(){
+      emailjs.init("rGrl9_JpmI-B7sokr");
+    })();
+
+    function sendMail(e) {
+      e.preventDefault();
+      const serviceID = "service_f5rurt4";
+      const templateID = "YOUR_TEMPLATE_ID"; // replace with your template ID
+
+      emailjs.sendForm(serviceID, templateID, e.target)
+        .then(() => {
+          alert("✅ Thank you for joining us! A confirmation email has been sent.");
+          e.target.reset();
+        }, (err) => {
+          alert("Oops! " + JSON.stringify(err));
+        });
+    }
+  </script>
+</head>
+<body>
+  <nav aria-label="Primary Navigation">
+    <a href="#about">About</a>
+    <a href="#mission">Mission</a>
+    <a href="#education">Educational Programs</a>
+    <a href="#projects">Projects</a>
+    <a href="#events">Events</a>
+    <a href="#gallery">Gallery</a>
+    <a href="#team">Team</a>
+    <a href="#join">Join Us</a>
+  </nav>
+
+  <header role="banner">
+    <iframe
+      src="https://my.spline.design/retrofuturisticcircuitloop-5zMvEfzimbn1xOhkeObQIiu2/"
+      title="Background interactive graphic"
+      aria-hidden="true"
+      ></iframe>
+    <div class="overlay">
+      <h1>Voice for Peace</h1>
+      <p>IES Public School Initiative for Harmony & Education</p>
+    </div>
+  </header>
+
+  <section id="about" tabindex="0" aria-label="About Voice for Peace">
+    <h2>About Voice for Peace</h2>
+    <p>
+      Our initiative nurtures harmony, education, and collaboration among students. We believe peace begins with understanding, learning, and mutual respect. It also refers to various initiatives advocating peaceful conflict resolution, such as the Voice of Peace radio station founded by Abie Nathan to foster dialogue between Israelis and Palestinians.
+    </p>
+    <img
+      src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=800&q=80"
+      alt="Students collaborating for peace"
+      loading="lazy"
+      style="width: 100%; max-width: 800px; border-radius: 15px; margin-top: 20px;"
+    />
+  </section>
+
+  <section id="mission" tabindex="0" aria-label="Our Mission">
+    <h2>Our Mission</h2>
+    <div class="mission-cards">
+      <article class="mission-card" tabindex="0" aria-label="Education Mission">
+        <img src="https://images.unsplash.com/photo-1503676260728-1c00da094a0b?auto=format&fit=crop&w=400&q=80" alt="Education" />
+        <h3>Education</h3>
+        <p>Empowering students with knowledge and skills for peacebuilding, conflict resolution, and social justice.</p>
+      </article>
+      <article class="mission-card" tabindex="0" aria-label="Advocacy Mission">
+        <img src="https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=400&q=80" alt="Advocacy" />
+        <h3>Advocacy</h3>
+        <p>Amplifying voices of peace worldwide through campaigns and social media.</p>
+      </article>
+    </div>
+  </section>
+
+  <section id="education" tabindex="0" aria-label="Educational Programs">
+    <h2>Educational Programs</h2>
+    <p>We organize seminars, guest lectures, and interactive sessions to empower students with the knowledge and skills needed to promote peace and social justice.</p>
+    <div class="edu-items">
+      <div class="edu-item" tabindex="0" aria-label="Students learning in classroom">
+        <img src="https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=320&q=80" alt="Students learning in classroom" loading="lazy" />
+        <p>Students learning in classroom</p>
+      </div>
+      <div class="edu-item" tabindex="0" aria-label="Advocacy icon">
+        <img src="https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=320&q=80" alt="Advocacy icon" loading="lazy" />
+        <p>Advocate - Amplifying voices of peace worldwide through campaigns and social media.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="projects" tabindex="0" aria-label="Projects">
+    <h2>Projects</h2>
+    <p>Our projects include community workshops and youth leadership training programs designed to foster peace and social responsibility.</p>
+    <div class="gallery">
+      <img src="https://images.unsplash.com/photo-1543269865-cbf427effbad?auto=format&fit=crop&w=400&q=80" alt="Community workshop" loading="lazy" />
+      <img src="https://images.unsplash.com/photo-1541532713592-79a0317b6b77?auto=format&fit=crop&w=400&q=80" alt="Youth leadership training" loading="lazy" />
+    </div>
+  </section>
+
+  <section id="events" tabindex="0" aria-label="Events">
+    <h2>Events</h2>
+    <p>We host annual peace festivals, panel discussions, and cultural exchange programs that bring diverse communities together in celebration of peace.</p>
+    <div class="gallery">
+      <!-- Removed first image -->
+      <img src="https://images.unsplash.com/photo-1472653431158-6364773b2a56?auto=format&fit=crop&w=400&q=80" alt="Peace festival" loading="lazy" />
+      <img src="https://images.unsplash.com/photo-1496307042754-b4aa456c4a2d?auto=format&fit=crop&w=400&q=80" alt="Panel discussion" loading="lazy" />
+      <img src="https://images.unsplash.com/photo-1496307042754-b4aa456c4a2d?auto=format&fit=crop&w=400&q=80" alt="Cultural exchange" loading="lazy" />
+    </div>
+  </section>
+
+  <section id="gallery" tabindex="0" aria-label="Gallery">
+    <h2>Gallery</h2>
+    <div class="gallery">
+      <img src="https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=400&q=80" alt="Advocacy event" loading="lazy" />
+      <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=400&q=80" alt="Peace march" loading="lazy" />
+      <img src="https://images.unsplash.com/photo-1543269865-cbf427effbad?auto=format&fit=crop&w=400&q=80" alt="Community gathering" loading="lazy" />
+      <img src="https://images.unsplash.com/photo-1472653431158-6364773b2a56?auto=format&fit=crop&w=400&q=80" alt="Peace festival" loading="lazy" />
+    </div>
+  </section>
+
+  <section id="team" tabindex="0" aria-label="Our Team">
+    <h2>Our Team</h2>
+    <div style="display:flex; justify-content:center; flex-wrap:wrap; gap:30px; max-width:1000px; margin:0 auto;">
+      <article class="member" tabindex="0" aria-label="Anna Williams, Project Lead">
+        <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Anna Williams" loading="lazy" />
+        <h3>Anna Williams</h3>
+        <p>Project Lead</p>
+      </article>
+      <article class="member" tabindex="0" aria-label="John Smith, Education Coordinator">
+        <img src="https://randomuser.me/api/portraits/men/34.jpg" alt="John Smith" loading="lazy" />
+        <h3>John Smith</h3>
+        <p>Education Coordinator</p>
+      </article>
+      <article class="member" tabindex="0" aria-label="Maria Rodriguez, Advocacy Specialist">
+        <img src="https://randomuser.me/api/portraits/women/68.jpg" alt="Maria Rodriguez" loading="lazy" />
+        <h3>Maria Rodriguez</h3>
+        <p>Advocacy Specialist</p>
+      </article>
+    </div>
+  </section>
+
+  <section id="join" tabindex="0" aria-label="Join Voice for Peace">
+    <h2>Join Us</h2>
+    <form onsubmit="sendMail(event)" aria-label="Join Voice for Peace contact form">
+      <label for="name">Full Name</label>
+      <input type="text" id="name" name="from_name" required aria-required="true" />
+
+      <label for="email">Email Address</label>
+      <input type="email" id="email" name="reply_to" required aria-required="true" />
+
+      <label for="message">Message</label>
+      <textarea id="message" name="message" rows="5" required aria-required="true"></textarea>
+
+      <button type="submit">Send</button>
+    </form>
+  </section>
+</body>
+</html>
